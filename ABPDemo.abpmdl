@@ -1,0 +1,97 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.LeptonXLiteTheme": {
+      "version": "4.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.Account": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.OpenIddict": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.Identity": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "9.1.0",
+      "isInstalled": true
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "ABPDemo.Application": {
+      "path": "src/ABPDemo.Application/ABPDemo.Application.abppkg",
+      "folder": "src"
+    },
+    "ABPDemo.Application.Tests": {
+      "path": "test/ABPDemo.Application.Tests/ABPDemo.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "ABPDemo.Domain.Shared": {
+      "path": "src/ABPDemo.Domain.Shared/ABPDemo.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "ABPDemo.Application.Contracts": {
+      "path": "src/ABPDemo.Application.Contracts/ABPDemo.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "ABPDemo.HttpApi": {
+      "path": "src/ABPDemo.HttpApi/ABPDemo.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "ABPDemo.HttpApi.Client": {
+      "path": "src/ABPDemo.HttpApi.Client/ABPDemo.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "ABPDemo.EntityFrameworkCore.Tests": {
+      "path": "test/ABPDemo.EntityFrameworkCore.Tests/ABPDemo.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "ABPDemo.EntityFrameworkCore": {
+      "path": "src/ABPDemo.EntityFrameworkCore/ABPDemo.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "ABPDemo.TestBase": {
+      "path": "test/ABPDemo.TestBase/ABPDemo.TestBase.abppkg",
+      "folder": "test"
+    },
+    "ABPDemo.Domain.Tests": {
+      "path": "test/ABPDemo.Domain.Tests/ABPDemo.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "ABPDemo.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/ABPDemo.HttpApi.Client.ConsoleTestApp/ABPDemo.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "ABPDemo.DbMigrator": {
+      "path": "src/ABPDemo.DbMigrator/ABPDemo.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "ABPDemo.HttpApi.Host": {
+      "path": "src/ABPDemo.HttpApi.Host/ABPDemo.HttpApi.Host.abppkg",
+      "folder": "src"
+    },
+    "ABPDemo.Domain": {
+      "path": "src/ABPDemo.Domain/ABPDemo.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}
