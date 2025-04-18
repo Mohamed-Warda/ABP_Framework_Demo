@@ -19,6 +19,9 @@ using Volo.Abp.Identity;
 
 namespace ABPDemo;
 
+// Every project in the solution has a file like this,
+// as each project represents a module.
+// Here, we specify which modules this domain module depends on.
 [DependsOn(
     typeof(ABPDemoDomainSharedModule),
     typeof(AbpAuditLoggingDomainModule),
