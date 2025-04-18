@@ -18,32 +18,36 @@ public class CategoryDataSeeder : IDataSeedContributor, ITransientDependency
         this.categoriesRepository = categoriesRepository;
     }
 
-    public Task SeedAsync(DataSeedContext context)
+    public async Task SeedAsync(DataSeedContext context)
     {
-        var categories = new List<Category>()
+        // Insert seed data only when the table has no existing records
+        if (!await categoriesRepository.AnyAsync())
         {
-            new Category(id: 1,
-                nameAr:"أطعمة ومشروبات",
-                nameEn: "Food & Drinks",
-                descriptionAr:"جميع أنواع الأطعمة والمشروبات",
-                descriptionEn: "All food and drink categories"),
-            new Category(id: 2,
-                nameAr:"مواد تنظيف",
-                nameEn: "Detergents",
-                descriptionAr:"المنظفات بأنواعها",
-                descriptionEn: "all materials used for cleaning"),
-            new Category(id: 3,
-                nameAr:"عطور",
-                nameEn: "Fragrances",
-                descriptionAr:"العطور بأنواعها",
-                descriptionEn: "all perfumes and its sub-categories"),
-            new Category(id: 4,
-                nameAr:"بلاستيك",
-                nameEn: "Plastic",
-                descriptionAr:"البلاستيك القابل للتدوير والغير قابل للتدوير",
-                descriptionEn: "all reusable and non-reusable plastic materials"),
-        };
+            var categories = new List<Category>
+            {
+                new(1,
+                    "أطعمة ومشروبات",
+                    "Food & Drinks",
+                    "جميع أنواع الأطعمة والمشروبات",
+                    "All food and drink categories"),
+                new(2,
+                    "مواد تنظيف",
+                    "Detergents",
+                    "المنظفات بأنواعها",
+                    "all materials used for cleaning"),
+                new(3,
+                    "عطور",
+                    "Fragrances",
+                    "العطور بأنواعها",
+                    "all perfumes and its sub-categories"),
+                new(4,
+                    "بلاستيك",
+                    "Plastic",
+                    "البلاستيك القابل للتدوير والغير قابل للتدوير",
+                    "all reusable and non-reusable plastic materials")
+            };
 
-        return this.categoriesRepository.InsertManyAsync(categories);
+            await categoriesRepository.InsertManyAsync(categories);
+        }
     }
 }
