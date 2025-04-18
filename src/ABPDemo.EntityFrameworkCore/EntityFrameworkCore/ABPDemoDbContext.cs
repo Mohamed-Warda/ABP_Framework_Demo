@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using ABPDemo.Books;
+using ABPDemo.Categories;
+using ABPDemo.Configurations;
+using ABPDemo.Products;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -51,6 +54,9 @@ public class ABPDemoDbContext :
 
     #endregion
 
+    //register our dbsets
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Category>  Categories { get; set; }
     public ABPDemoDbContext(DbContextOptions<ABPDemoDbContext> options)
         : base(options)
     {
@@ -72,6 +78,8 @@ public class ABPDemoDbContext :
         builder.ConfigureOpenIddict();
         builder.ConfigureBlobStoring();
         
+        //this is a way to create ef core/table configuration 
+        //but we will use the other way as create seperate folder for each entity configuration
         builder.Entity<Book>(b =>
         {
             b.ToTable(ABPDemoConsts.DbTablePrefix + "Books",
@@ -80,6 +88,9 @@ public class ABPDemoDbContext :
             b.Property(x => x.Name).IsRequired().HasMaxLength(128);
         });
         
+        //this is the second way of registering our ef core configurations
+        builder.ApplyConfiguration(new ProductConfiguration());
+        builder.ApplyConfiguration(new CategoryConfiguration());
         /* Configure your own tables/entities inside here */
 
         //builder.Entity<YourEntity>(b =>
