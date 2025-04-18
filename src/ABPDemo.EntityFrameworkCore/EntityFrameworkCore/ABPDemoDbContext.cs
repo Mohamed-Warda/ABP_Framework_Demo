@@ -1,8 +1,8 @@
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using ABPDemo.Books;
 using ABPDemo.Categories;
-using ABPDemo.Configurations;
 using ABPDemo.Products;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
@@ -89,8 +89,13 @@ public class ABPDemoDbContext :
         });
         
         //this is the second way of registering our ef core configurations
-        builder.ApplyConfiguration(new ProductConfiguration());
-        builder.ApplyConfiguration(new CategoryConfiguration());
+        /*builder.ApplyConfiguration(new ProductConfiguration());
+        builder.ApplyConfiguration(new CategoryConfiguration());*/
+        
+        // A cleaner way to register all EF Core entity configurations from the current assembly
+        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        
+        
         /* Configure your own tables/entities inside here */
 
         //builder.Entity<YourEntity>(b =>
