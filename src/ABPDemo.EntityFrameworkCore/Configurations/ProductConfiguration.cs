@@ -24,7 +24,7 @@ internal class ProductConfiguration : IEntityTypeConfiguration<Product>
             .WithMany()
             .HasForeignKey(x => x.CategoryId)
             .IsRequired()
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.ToTable("Products");
     }

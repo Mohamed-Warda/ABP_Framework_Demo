@@ -65,7 +65,7 @@ namespace ABPDemo.Migrations
                         principalSchema: "LookUp",
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
