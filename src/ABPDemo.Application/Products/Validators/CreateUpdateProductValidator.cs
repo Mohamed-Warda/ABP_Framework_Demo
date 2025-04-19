@@ -1,0 +1,35 @@
+﻿using ABPDemo.Products.Dtos;
+using FluentValidation;
+
+namespace ABPDemo.Products.Validators;
+
+public class CreateUpdateProductValidator : AbstractValidator<CreateUpdateProductDto>
+{
+    public CreateUpdateProductValidator()
+    {
+        RuleFor(x => x.NameAr)
+            .NotEmpty()
+            .MaximumLength(ABPDemoConsts.GeneralTextMaxLength)
+            .WithErrorCode(ABPDemoDomainErrorCodes.INVALID_PRODUCT_DATA_NAME_AR)
+            .WithMessage("Product Name in Arabic is invalid");
+        RuleFor(x => x.NameEn)
+            .NotEmpty()
+            .MaximumLength(ABPDemoConsts.GeneralTextMaxLength)
+            .WithErrorCode(ABPDemoDomainErrorCodes.INVALID_PRODUCT_DATA_NAME_EN)
+            .WithMessage("Product Name in English is invalid");
+        RuleFor(x => x.DescriptionAr)
+            .NotEmpty()
+            .MaximumLength(ABPDemoConsts.DescriptionTextMaxLength)
+            .WithErrorCode(ABPDemoDomainErrorCodes.INVALID_PRODUCT_DATA_DESC_AR)
+            .WithMessage("Product Description in Arabic is invalid");
+        RuleFor(x => x.DescriptionEn)
+            .NotEmpty()
+            .MaximumLength(ABPDemoConsts.DescriptionTextMaxLength)
+            .WithErrorCode(ABPDemoDomainErrorCodes.INVALID_PRODUCT_DATA_DESC_EN)
+            .WithMessage("Product Description in English is invalid");
+        RuleFor(x => x.CategoryId)
+            .NotEmpty()
+            .WithErrorCode(ABPDemoDomainErrorCodes.INVALID_PRODUCT_CATEGORY)
+            .WithMessage("Product Category is invalid");
+    }
+}

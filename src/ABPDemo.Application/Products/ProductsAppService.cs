@@ -6,18 +6,16 @@ using System.Threading.Tasks;
 using ABPDemo.Bases;
 using ABPDemo.Products.Contracts;
 using ABPDemo.Products.Dtos;
-using AutoMapper.Internal.Mappers;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
-using System.Linq.Dynamic.Core;
 using ABPDemo.Products.DomainExceptions;
+using ABPDemo.Products.Validators;
 using Microsoft.EntityFrameworkCore;
 
 namespace ABPDemo.Products;
 
 
-
-public class ProductsAppService : BaseApplicationService, IProductsAppService
+    public class ProductsAppService : BaseApplicationService, IProductsAppService
     {
         #region fields
         private readonly IRepository<Product, int> productsRepository; 
@@ -33,6 +31,14 @@ public class ProductsAppService : BaseApplicationService, IProductsAppService
         #region IProductsAppService
         public async Task<ProductDto> CreateProductAsync(CreateUpdateProductDto input)
         {
+            //validation
+            var validateResult = new CreateUpdateProductValidator().Validate(input);
+            if(!validateResult.IsValid)
+            {
+                var exception = GetValidationException(validateResult);
+                throw exception;
+            }
+
             var product = ObjectMapper.Map<CreateUpdateProductDto, Product>(input);
             var inserted = await productsRepository.InsertAsync(product, autoSave: true);
             return ObjectMapper.Map<Product, ProductDto>(inserted);
@@ -40,6 +46,14 @@ public class ProductsAppService : BaseApplicationService, IProductsAppService
 
         public async Task<ProductDto> UpdateProductAsync(CreateUpdateProductDto input)
         {
+            //validation
+            var validateResult = new CreateUpdateProductValidator().Validate(input);
+            if (!validateResult.IsValid)
+            {
+                var exception = GetValidationException(validateResult);
+                throw exception;
+            }
+
             var existing = await productsRepository.GetAsync(input.Id);
             if (existing == null) 
             {
@@ -56,7 +70,7 @@ public class ProductsAppService : BaseApplicationService, IProductsAppService
             var existingProduct = await productsRepository.GetAsync(id);
             if(existingProduct == null)
             {
-                return false;
+                throw new ProductNotFoundException(id);
             }
 
             await productsRepository.DeleteAsync(existingProduct);
