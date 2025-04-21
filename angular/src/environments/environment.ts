@@ -18,6 +18,7 @@ export const environment = {
     name: 'ABPDemo',
   },
   oAuthConfig,
+  //this is how he know which backend to use
   apis: {
     default: {
       url: 'https://localhost:44371',

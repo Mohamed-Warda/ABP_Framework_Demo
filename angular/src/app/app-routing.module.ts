@@ -13,6 +13,14 @@ const routes: Routes = [
     loadChildren: () => import('@abp/ng.account').then(m => m.AccountModule.forLazy()),
   },
   {
+    path: 'categories',
+    loadChildren: () => import('./modules/categories/categories.module').then(m => m.CategoriesModule),
+  },
+  {
+    path: 'products',
+    loadChildren: () => import('./modules/products/products.module').then(m => m.ProductsModule),
+  },
+  {
     path: 'identity',
     loadChildren: () => import('@abp/ng.identity').then(m => m.IdentityModule.forLazy()),
   },

@@ -21,8 +21,24 @@ function configureRoutes() {
         path: '/books',
         name: '::Menu:Books',
         iconClass: 'fas fa-book',
+        order:2,
         layout: eLayoutType.application,
-        requiredPolicy: 'ABPDemo.Books',
+      //  requiredPolicy: 'ABPDemo.Books',
       },
+
+    {
+      path: 'categories',
+      name: 'Categories',
+      iconClass: 'fas fa-list',
+      order: 3,
+      layout: eLayoutType.application,
+    },
+    {
+      path: 'products',
+      name: 'Products',
+      iconClass: 'fas fa-box',
+      order: 4,
+      layout: eLayoutType.application,
+    },
   ]);
 }
