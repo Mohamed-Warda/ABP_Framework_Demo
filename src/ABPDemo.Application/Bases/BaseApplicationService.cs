@@ -5,7 +5,7 @@ using Volo.Abp.Validation;
 namespace ABPDemo.Bases;
 
 // 'ApplicationService' is the base class for all application services in ABP
-public class BaseApplicationService : ApplicationService
+public abstract class BaseApplicationService : ApplicationService
 {
     public BaseApplicationService()
     {
@@ -13,7 +13,7 @@ public class BaseApplicationService : ApplicationService
     }
 
     #region helper methods
-    public AbpValidationException GetValidationException
+    internal AbpValidationException GetValidationException
         (FluentValidation.Results.ValidationResult validationResult)
     {
 
