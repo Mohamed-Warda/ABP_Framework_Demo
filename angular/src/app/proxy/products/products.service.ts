@@ -31,7 +31,7 @@ export class ProductsService {
     this.restService.request<any, PagedResultDto<ProductDto>>({
       method: 'GET',
       url: '/api/app/products',
-      params: { filter: input.filter, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { filter: input.filter, categoryId: input.categoryId, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   

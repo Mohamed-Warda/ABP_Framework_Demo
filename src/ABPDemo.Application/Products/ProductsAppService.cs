@@ -93,6 +93,10 @@ namespace ABPDemo.Products;
                     product => product.NameAr.Contains(input.Filter) ||
                                product.NameEn.Contains(input.Filter)
                 )
+                .WhereIf(
+                    input.CategoryId.HasValue,
+                    product => product.CategoryId == input.CategoryId
+                )
                 .Skip(input.SkipCount)
                 .Take(input.MaxResultCount)
                 // 'OrderBy' is from the 'System.Linq.Dynamic.Core' namespace

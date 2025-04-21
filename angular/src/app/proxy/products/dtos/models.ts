@@ -10,6 +10,7 @@ export interface CreateUpdateProductDto extends EntityDto<number> {
 
 export interface GetProductListDto extends PagedAndSortedResultRequestDto {
   filter?: string;
+  categoryId?: number;
 }
 
 export interface ProductDto extends FullAuditedEntityDto<number> {
