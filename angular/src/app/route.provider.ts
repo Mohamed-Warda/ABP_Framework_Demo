@@ -39,6 +39,7 @@ function configureRoutes() {
       iconClass: 'fas fa-box',
       order: 4,
       layout: eLayoutType.application,
+      requiredPolicy: 'Product.Products.List',
     },
   ]);
 }

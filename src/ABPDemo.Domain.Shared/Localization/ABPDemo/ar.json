@@ -37,6 +37,12 @@
     "Unspecified": "نظام",
     "SeeAllUsers": "رؤية كافة المستخدمين",
     "TakePhoto": "تصوير",
-    "ChoosePhoto": "اختر صورة"
+    "ChoosePhoto": "اختر صورة",
+
+    "AbpDemo.Products": "المنتجات",
+    "Permission:Products:CreateEditProduct": "إنشاء وتعديل منتج",
+    "Permission:Products:GetProduct": "عرض منتج",
+    "Permission:Products:ListProduct": "عرض المنتجات",
+    "Permission:Products:DeleteProduct": "حذف المنتج"
   }
 }

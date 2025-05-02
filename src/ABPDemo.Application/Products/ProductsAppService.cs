@@ -11,6 +11,10 @@ using Volo.Abp.Domain.Repositories;
 using ABPDemo.Products.DomainExceptions;
 using ABPDemo.Products.Validators;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using ABPDemo.Permissions;
+using static ABPDemo.Permissions.ABPDemoPermissions;
+using Volo.Abp.Authorization;
 
 namespace ABPDemo.Products;
 
@@ -26,10 +30,11 @@ namespace ABPDemo.Products;
         {
             this.productsRepository = productsRepository;
         }
-        #endregion constructor
+    #endregion constructor
 
-        #region IProductsAppService
-        public async Task<ProductDto> CreateProductAsync(CreateUpdateProductDto input)
+    #region IProductsAppService
+     [Authorize(ProductPermissions.CreateEditProductPermission)]
+    public async Task<ProductDto> CreateProductAsync(CreateUpdateProductDto input)
         {
             //validation
             var validateResult = new CreateUpdateProductValidator().Validate(input);
@@ -44,7 +49,8 @@ namespace ABPDemo.Products;
             return ObjectMapper.Map<Product, ProductDto>(inserted);
         }
 
-        public async Task<ProductDto> UpdateProductAsync(CreateUpdateProductDto input)
+    [Authorize(ProductPermissions.CreateEditProductPermission)]
+    public async Task<ProductDto> UpdateProductAsync(CreateUpdateProductDto input)
         {
             //validation
             var validateResult = new CreateUpdateProductValidator().Validate(input);
@@ -64,8 +70,9 @@ namespace ABPDemo.Products;
             return ObjectMapper.Map<Product, ProductDto>(updated);
         }
 
+    [Authorize(ProductPermissions.DeleteProductPermission)]
 
-        public async Task<bool> DeleteProductAsync(int id)
+    public async Task<bool> DeleteProductAsync(int id)
         {
             var existingProduct = await productsRepository.GetAsync(id);
             if(existingProduct == null)
@@ -77,7 +84,9 @@ namespace ABPDemo.Products;
             return true;
         }
 
-        public async Task<PagedResultDto<ProductDto>> GetListAsync(GetProductListDto input)
+
+    [Authorize(ProductPermissions.GetProductPermission)]
+    public async Task<PagedResultDto<ProductDto>> GetListAsync(GetProductListDto input)
         {
             if (input.Sorting.IsNullOrWhiteSpace())
             {
@@ -115,7 +124,8 @@ namespace ABPDemo.Products;
             );
         }
 
-        public async Task<ProductDto> GetProductAsync(int id)
+    [Authorize(ProductPermissions.GetProductPermission)]
+    public async Task<ProductDto> GetProductAsync(int id)
         {
             var product = await productsRepository
                            .WithDetailsAsync(x => x.Category)
@@ -127,6 +137,35 @@ namespace ABPDemo.Products;
                 throw new ProductNotFoundException(id);
             }
             return ObjectMapper.Map<Product, ProductDto>(product);
-        } 
-        #endregion IProductsAppService
+        }
+
+
+
+    // you dont need to  be loged in to call this action
+    [AllowAnonymous]
+    public Task<bool> LabTestProductAsync(int id)
+    {
+        //call lab test service
+
+        return Task.FromResult(true);
     }
+
+    //how to check if the user has permission
+    public async Task<bool> TestComplexPermissions()
+    {
+        var result = await AuthorizationService.AuthorizeAsync(ProductPermissions.CreateEditProductPermission);
+        if (result.Succeeded == false)
+        {
+            //throw exception
+            throw new AbpAuthorizationException("You don't have permission for this action");
+        }
+
+        return true;
+    }
+    #endregion IProductsAppService
+
+
+}
+
+
+
