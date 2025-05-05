@@ -6,6 +6,9 @@ using Volo.Abp.AutoMapper;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.FluentValidation;
 using Volo.Abp.Modularity;
+using Volo.Abp.Caching.StackExchangeRedis;
+using System;
+using Volo.Abp.Caching;
 
 namespace ABPDemo;
 
@@ -17,7 +20,8 @@ namespace ABPDemo;
     typeof(AbpIdentityApplicationModule),
     typeof(AbpAccountApplicationModule),
     typeof(AbpSettingManagementApplicationModule),
-    typeof(AbpFluentValidationModule)
+    typeof(AbpFluentValidationModule),
+    typeof(AbpCachingStackExchangeRedisModule)
     )]
 public class ABPDemoApplicationModule : AbpModule
 {
@@ -27,5 +31,11 @@ public class ABPDemoApplicationModule : AbpModule
         {
             options.AddMaps<ABPDemoApplicationModule>();
         });
+        Configure<AbpDistributedCacheOptions>(options =>
+        {
+            options.KeyPrefix = "Demo1_";
+            options.GlobalCacheEntryOptions.AbsoluteExpiration = DateTimeOffset.Now.AddHours(1);
+        });
     }
 }
+

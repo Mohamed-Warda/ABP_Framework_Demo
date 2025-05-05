@@ -34,13 +34,19 @@ public class LookupsAppService : BaseApplicationService
     {
         // return await GetAllCategoriesFromDbAsync();
 
+        //return await categoryCache.GetOrAddAsync(
+        //    $"ALL_CATEGORIES", //Cache key
+        //    async () => await GetAllCategoriesFromDbAsync(),
+        //    () => new DistributedCacheEntryOptions
+        //    {
+        //        AbsoluteExpiration = DateTimeOffset.Now.AddHours(1)
+        //    }
+        //);
+
+        //Using Redis
         return await categoryCache.GetOrAddAsync(
             $"ALL_CATEGORIES", //Cache key
-            async () => await GetAllCategoriesFromDbAsync(),
-            () => new DistributedCacheEntryOptions
-            {
-                AbsoluteExpiration = DateTimeOffset.Now.AddHours(1)
-            }
+            async () => await GetAllCategoriesFromDbAsync()
         );
     }
     #endregion
