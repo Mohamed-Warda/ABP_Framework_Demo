@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Caching;
 using Volo.Abp.Domain.Repositories;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace ABPDemo.Lookups;
 public class LookupsAppService : BaseApplicationService
@@ -31,8 +32,16 @@ public class LookupsAppService : BaseApplicationService
     #region methods
     public async Task<List<CategoryDto>> GetCategories()
     {
-        return await GetAllCategoriesFromDbAsync();
-       
+        // return await GetAllCategoriesFromDbAsync();
+
+        return await categoryCache.GetOrAddAsync(
+            $"ALL_CATEGORIES", //Cache key
+            async () => await GetAllCategoriesFromDbAsync(),
+            () => new DistributedCacheEntryOptions
+            {
+                AbsoluteExpiration = DateTimeOffset.Now.AddHours(1)
+            }
+        );
     }
     #endregion
 
